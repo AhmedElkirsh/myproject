@@ -1,21 +1,33 @@
 import MyCard from './MyCard'
 import '../components/ProductSection.css'
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
+import holder from '../assets/no-image-found.jpg'
+import axios from 'axios'
 
-export default class ProductSection extends Component {
-  render() {
+export default function ProductSection(){
+  
     /* let myFunction = ()=> {{
       console.log("Hello my function");
     }}  */
 
-    let products=[
-      {title:"Shoe", img:"https://api.lorem.space/image/shoes?w=150&h=150", insstock:4, desc:"complete the outfit"},
-      {title:"Watch", img:"https://api.lorem.space/image/watch?w=150&h=150", insstock:5, desc:"Stylish and convenient"},
-      {title:"Chair", img:"https://api.lorem.space/image/furniture?w=150&h=150", insstock:0, desc:"Comfy and cosy"},
-      {title:"Another watch", img:"https://api.lorem.space/image/watch?w=150&h=150", insstock:7, desc:"Surpise!"},
-      {title:"Drink", img:"https://api.lorem.space/image/drink?w=150&h=150", insstock:0, desc:"Ice Cold Drink"},
-      {title:"Meal", img:"https://api.lorem.space/image/burger?w=150&h=150", insstock:9, desc:"Delicious burger"}
-    ]
+    useEffect(()=>{
+      fetching()
+    },[])
+
+    let pageNO = 1;  // maybe adjustable
+    let itemsToShow = 8;
+    let skippedCards = [pageNO-1]*itemsToShow
+
+    let fetching = async ()=>{
+      /* let data = await fetch("https://api.escuelajs.co/api/v1/products")
+      let products = await data.json() */
+      let Mydata = await axios.get(`https://api.escuelajs.co/api/v1/products?offset=0&limit=20`)
+      setProducts(Mydata.data)
+      
+    }
+    
+    let [products,setProducts]=useState([]) 
+    
 
 // every Json Object need a unique key for each of it's objects..usually called id.. so that virtual DOM can differenciate between nodes 
 
@@ -27,13 +39,26 @@ export default class ProductSection extends Component {
         <h2 className='pt-4 text-center text-uppercase '>our Products</h2>
 
         <div className='section'>
-        {
+          {
 
-          products.map((product,index)=><MyCard title={product.title} img={product.img} insstock={product.insstock} desc={product.desc} key={index}/>)
+            products.map((product)=>(
 
-        } 
+              <MyCard 
+                title={product.title}
+                desc={product.description} 
+                price={product.price}
+                key={product.id}
+                id={product.id}
+                
+                img={product.images[0]?product.images[0]:'https://placeimg.com/640/480/any?r=0.8807778235430017'} 
+
+              />
+
+            ))
+
+          } 
         </div>
       </div>
     )   
-  }
 }
+

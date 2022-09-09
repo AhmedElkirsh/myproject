@@ -1,20 +1,22 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import * as icon from 'react-bootstrap-icons'
- 
+/* import { CounterContext } from '../context/counterContext' */
 
-export default class Footer extends Component {
-  render() {
+
+export default function Footer() {
+  
     /* let GiveData = this.props.myFunction;
-    GiveData("some useful data") */
-    this.props.myFunction(1234);
-        
+    GiveData("some useful data")
+    this.props.myFunction(1234); */
+    /* let datafromcontext= useContext(CounterContext) */
     
+
     return (
-        <div className='bg-dark p-4 text-white text-center '>
+        <div className='bg-dark p-4 text-white text-center'>
             <div className='d-flex justify-content-between'>
                 <div>
                     <h5 className='text-uppercase'>contact us</h5>
-                    <p> <icon.EnvelopeFill/>    ahmed.atef.2019@outlook.com</p>
+                    <p> <icon.EnvelopeFill/> Brand@outlook.com</p>
                 </div>
                 <div>
                     <h5 className='text-uppercase'>stay connected</h5>
@@ -36,12 +38,12 @@ export default class Footer extends Component {
                 <div>
                     <h5 className='text-uppercase'>Excited?</h5>
                     <button className='py-2 px-4 rounded-1 no border ' type='button'href='#'>
-                        <a className='text-uppercase font-weight-bold text-decoration-none text-dark text-small h6'>join us now</a>
+                        <a className='text-uppercase font-weight-bold text-decoration-none text-dark text-small h6'>Sign In Now!</a>
                     </button>
                 </div>
             </div>
             <div className='pt-2 border-top d-flex gap-5 justify-content-between mt-2'>
-                <p className='fs-6'>© 2022 Ahmed Atef. All rights reserved.</p>
+                <p className='fs-6'>© 2022 Brand. All rights reserved.</p>
                 <ul className="list-unstyled d-flex gap-3">
                     <li className='d-inline-block text-uppercase fs-6'><a href="#" className='text-decoration-none text-white'>privacy policy</a></li>
                     <li className='d-inline-block text-uppercase fs-6' href="#"><a href="#" className='text-decoration-none text-white'>FAQ</a></li>
@@ -49,7 +51,7 @@ export default class Footer extends Component {
                 </ul>
             </div>
         </div>
-        
+
     )
-  }
+
 }

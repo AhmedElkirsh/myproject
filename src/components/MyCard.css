@@ -1,0 +1,15 @@
+
+#text{
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line {
+    border: solid 1px transparent ;
+    
+    border-bottom-color: rgba(120, 120, 120, 0.365);
+    
+}
+

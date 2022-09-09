@@ -1,40 +1,77 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import holder1 from '../assets/holder.jpg'
-import React, { Component } from 'react'
-
-export default class MyCard extends Component {
-
-  /* static defaultProps={
-    title:"unknown Product",
-    desc:"unkown Description"
-  }; */
+import React, {useState}  from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import {AddtoNavCount} from '../store/CounterSlice'
+import "./MyCard.css"
+import { Link } from 'react-router-dom'
 
 
-  render() {
+export default function MyCard(props) {
 
-    let {title,desc,insstock,img}=this.props // check destructuring
+  let [ProductCount, setProductCount]= useState(1)
+  let increaseProductAmount=()=>{
+
+    setProductCount(ProductCount +1)
+
+  }
+
+  let decreaseProductAmount=()=>{
+
+    if (ProductCount ==1) {
+
+    } else {
+      setProductCount(ProductCount -1)
+    }
+    
+  }
+
+  let dispatch = useDispatch()  
+  let submitAmountHandeler = async ()=>{
+
+    dispatch(AddtoNavCount(ProductCount))
+    setProductCount(1)
+
+  }
+    
 
     return (
-        this.props.title
+        (props.title && props.img)
         &&
-        <Card style={{ width: '18rem' }} className='bg-white'>
-        <Card.Img variant="top" src={this.props.img} className='p-3'/>
-        <Card.Body>
-          <Card.Title>{this.props.title}</Card.Title>
-          <Card.Text>
-            {this.props.desc}
+        <Card style={{ width: '18rem' }} className='bg-white rounded-0 '>
+        <Card.Img variant="top" src={props.img} className='rounded-0'/>
+        <Card.Body className='d-flex flex-column'>
+          <div className='d-flex justify-content-between line mb-2'>
+            <Card.Title>{props.title}</Card.Title>
+            <p className='ps-2'>${props.price}</p>
+          </div>
+          <Card.Text id="text">
+            {props.desc}
           </Card.Text> 
-          <Button variant={this.props.insstock? "warning":"secondary"} onClick={this.props.funchandeler}
-             className={this.props.insstock? "":"disabled"}>
-              {this.props.insstock? "Buy Now":"Not Available"}
-          </Button>
+          <div className='mt-auto'>
+            <Link to={`/shop/${props.id}`} className='btn btn-outline-success text-uppercase rounded-0 w-100 my-1'>
+                check product
+            </Link>
+            <div className='d-flex'>
+              <Button variant='success' className='text-uppercase rounded-0 my-1' onClick={increaseProductAmount}> 
+              +
+              </Button>
+              <Button variant='success' className='text-uppercase rounded-0 w-75 my-1' onClick={submitAmountHandeler}>
+                add to cart {ProductCount!=1? <span className="badge text-success bg-white">{ProductCount}</span>:""}
+              </Button>
+              <Button variant='success' className='text-uppercase rounded-0 my-1' onClick={decreaseProductAmount}>
+              -
+              </Button>
+          </div>
+          </div>  
+          
+          
         </Card.Body>
-        {/* {this.props.children} */}
+        {props.children}
       </Card>
     )
 
-  }
+  
 }
 //`text-white ${this.props.bgInfo? this.props.bgInfo:"bg-primary"}`//
 // static => default attributes of something
